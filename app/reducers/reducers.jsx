@@ -1,6 +1,42 @@
 var uuid = require('node-uuid');
 var moment = require('moment');
 
+
+export var addPostsReducer = (state = [], action) => {
+  switch(action.type) {
+    case 'ADD_POSTS':
+      return [
+          ...action.posts
+        ]
+    default:
+      return state
+  }
+};
+
+export var setBlogReducer = (state = {}, action) => {
+  switch(action.type){
+    case 'SET_BLOGID':
+      return {
+        blogId: action.blogId
+      };
+    default:
+      return state
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+// ====================================== old
+
+
 export var searchTextReducer = (state = '', action) => {
   switch(action.type){
     case 'SET_SEARCH_TEXT':

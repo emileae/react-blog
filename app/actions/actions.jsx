@@ -2,6 +2,37 @@ import moment from 'moment';
 
 import firebase, {firebaseRef, githubProvider} from 'app/firebase/';// if file is called index can leave off filename
 
+export var addPosts = () => {
+  var posts = [
+    {
+      id: 'abc',
+      title: 'Blog Title A'
+    },
+    {
+      id: 'def',
+      title: 'Blog Title D'
+    }
+  ];
+  return {
+    type: "ADD_POSTS",
+    posts
+  }
+};
+
+export var setBlogId = (blogId) => {
+  return {
+    type: "SET_BLOGID",
+    blogId
+  }
+};
+
+
+
+
+
+
+// ====================================== old
+
 export var setSearchText = (searchText) => {
   return {
     type: "SET_SEARCH_TEXT",
