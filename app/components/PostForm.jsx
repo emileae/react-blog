@@ -7,15 +7,17 @@ export var PostForm = React.createClass({
   handleSubmit(e){
     e.preventDefault();
     console.log("should submit blog post");
-    // var {dispatch} = this.props;
-    // var todo = this.refs.todo.value;
-    //
-    // if ( todo.length > 0 ){
-    //   this.refs.todo.value = '';
-    //   dispatch(actions.startAddTodo(todo));
-    // }else{
-    //   this.refs.todo.focus();
-    // };
+    var {dispatch} = this.props;
+    var title = this.refs.title.value;
+    var text = this.refs.text.value;
+
+    if ( title.length > 0 && text.length > 0 ){
+      this.refs.title.value = '';
+      this.refs.text.value = '';
+      dispatch(actions.startAddPost(title, text));
+    }else{
+      this.refs.todo.focus();
+    };
   },
   render() {
     return (
@@ -27,16 +29,17 @@ export var PostForm = React.createClass({
               <div className="small-10 medium-6 column">
                 <label>
                   Title
-                  <input type="text"/>
+                  <input ref="title" type="text"/>
                 </label>
               </div>
               <div className="small-12 column">
                 <label>
                   Write something...
-                  <textarea placeholder="None"></textarea>
+                  <textarea ref="text" placeholder="None"></textarea>
                 </label>
               </div>
             </div>
+            <button type="submit" className="button expanded">Save</button>
           </form>
         </div>
       </div>

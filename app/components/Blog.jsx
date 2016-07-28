@@ -8,12 +8,8 @@ import * as actions from 'actions';
 
 
 export var Blog = React.createClass({
-  onLogout(e) {
-    var {dispatch} = this.props;
-    e.preventDefault();
-    dispatch(actions.startLogout());
-  },
   render() {
+
     return (
       <div>
 
@@ -33,4 +29,8 @@ export var Blog = React.createClass({
   }
 });
 
-export default Redux.connect()(Blog);
+export default Redux.connect(
+  (state) => {
+    return state;// return all properties on state
+  }
+)(Blog);

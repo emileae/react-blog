@@ -30,6 +30,7 @@ export default (
     <Route path="/">
       <IndexRoute component={Blog}></IndexRoute>
       <Route path="/post/:postId" component={Post}></Route>
+      <Route path="/admin" component={PostForm}></Route>
     </Route>
   </Router>
 );

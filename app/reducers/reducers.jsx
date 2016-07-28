@@ -13,11 +13,12 @@ export var addPostsReducer = (state = [], action) => {
   }
 };
 
-export var setBlogReducer = (state = {}, action) => {
+export var setCurrentPostReducer = (state = {}, action) => {
   switch(action.type){
-    case 'SET_BLOGID':
+    case 'SET_CURRENT_POST':
       return {
-        blogId: action.blogId
+        postId: action.postId,
+        postTitle: action.postTitle
       };
     default:
       return state

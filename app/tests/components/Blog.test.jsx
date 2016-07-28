@@ -6,26 +6,26 @@ var $ = require('jQuery');
 var TestUtils = require('react-addons-test-utils');
 
 var configureStore = require('configureStore');
-//var TodoList = require('TodoList');
-import TodoList from 'TodoList';
-import {TodoApp} from 'TodoApp';
 
-describe ('TodoApp', () => {
+import PostList from 'PostList';
+import {Blog} from 'Blog';
+
+describe ('Blog', () => {
 
   it('should exist', () => {
-    expect(TodoApp).toExist();
+    expect(Blog).toExist();
   });
 
-  it('should render TodoList', () => {
+  it('should render PostList', () => {
     var store = configureStore.configure();
     var provider = TestUtils.renderIntoDocument(
       <Provider store={store}>
-        <TodoApp/>
+        <Blog/>
       </Provider>
     );
-    var todoApp = TestUtils.scryRenderedComponentsWithType(provider, TodoApp)[0];
-    var todoList = TestUtils.scryRenderedComponentsWithType(todoApp, TodoList);
-    expect(todoList.length).toEqual(1);
+    var blog = TestUtils.scryRenderedComponentsWithType(provider, Blog)[0];
+    var postList = TestUtils.scryRenderedComponentsWithType(blog, PostList);
+    expect(postList.length).toEqual(1);
   });
 
 });

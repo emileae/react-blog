@@ -6,14 +6,19 @@ import * as actions from 'actions';
 export var Post = React.createClass({
   render() {
 
-    var {id, title} = this.props;
+    var {postId} = this.props.params;
+    var {currentPost} = this.props;
 
     return (
       <div>
-        <p>The full post...</p>
+        <p>title: {currentPost.postTitle}... {currentPost.postId}</p>
       </div>
     )
   }
 });
 
-export default Redux.connect()(Post);
+export default Redux.connect(
+  (state) => {
+    return state;// return all properties on state
+  }
+)(Post);

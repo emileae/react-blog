@@ -7,20 +7,21 @@ import * as actions from 'actions';
 export var PostItem = React.createClass({
   render() {
 
-    var {id, title} = this.props;
+    var {dispatch, id, title} = this.props;
     var postLink = '/post/'+ id;
-
-    var fullPost = (e) => {
-      e.preventDefault();
-      console.log('pid: ', id);
-    }
 
     return (
       <div>
-          <Link to={postLink} onClick={fullPost}>{title}</Link>
+          <Link to={postLink} onClick={() => {
+              dispatch(actions.setPost(id, title))
+            }}>{title}</Link>
       </div>
     )
   }
 });
 
-export default Redux.connect()(PostItem);
+export default Redux.connect(
+  (state) => {
+    return state.currentPost;
+  }
+)(PostItem);

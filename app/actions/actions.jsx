@@ -19,11 +19,40 @@ export var addPosts = () => {
   }
 };
 
-export var setBlogId = (blogId) => {
+export var setPost = (postId, postTitle) => {
   return {
-    type: "SET_BLOGID",
-    blogId
+    type: "SET_CURRENT_POST",
+    postId,
+    postTitle
   }
+};
+
+export var addPost = (post) => {
+  return {
+    type: "ADD_POST",
+    post
+  }
+};
+
+export var startAddPost = (title, text) => {
+  return (dispatch, getState) => {
+    
+    var post = {
+      text,
+      publish: false,
+      createdAt: moment().unix(),
+    };
+
+    var postRef = firebaseRef.child(`posts`).push(post);
+
+    return postRef.then(() => {
+      dispatch(addPost({
+        ...post,
+        id: postRef.key
+      }));
+    });
+
+  };
 };
 
 
