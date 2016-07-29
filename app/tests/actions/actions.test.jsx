@@ -9,28 +9,113 @@ var createMockStore = configureMockStore([thunk]);
 
 describe("Actions", () => {
 
-  it('should generate addPosts action', () => {
-    var posts = [
-      {
-        id: 'abc',
-        title: 'Blog Title A'
-      },
-      {
-        id: 'def',
-        title: 'Blog Title D'
-      }
-    ];
-
+  it('should generate add post action', () => {
     var action = {
-      type: "ADD_POSTS",
-      posts
+      type: "ADD_POST",
+      post: {
+          id: 'abc123',
+          title: 'Some title',
+          text: 'Some text',
+          publish: false,
+          createdAt: 1345
+      }
     };
-
-    var res = actions.addPosts();
+    var res = actions.addPost(action.post);
 
     expect(res).toEqual(action);
+  });
+
+  describe('Firebase test DB', () => {
+
+    var testPostRef;
+    var uid;
+    var postsRef;
+
+    //beforeEach, afterEach  this is a mocha function code to run before each test
+    beforeEach((done) => {
+
+      postsRef = firebaseRef.child(`posts`);
+
+      // remove all existing and then add a post in the callback
+      postsRef.remove().then(() => {
+        // create a post
+        testPostRef = firebaseRef.child('posts').push();
+
+        return testPostRef.set({
+          title: 'Some Test title',
+          text: 'Some Test text',
+          publish: false,
+          createdAt: 1345
+        });
+
+      })
+      .then(() => {done()})
+      .catch(done);
+    });
+
+    afterEach((done) => {
+      postsRef.remove().then(() => done());// clean up dummy data afterwards
+    });
+
+    it('should create post and dispatch ADD_POST', (done) => {
+
+        const store = createMockStore({});
+        const title = 'Some TEST title';
+        const text = 'Some TEST text';
+
+        store.dispatch(actions.startAddPost(title, text)).then(() => {
+          const actions = store.getActions();
+          expect(actions[0]).toInclude({
+            type: 'ADD_POST'
+          });
+          expect(actions[0].post).toInclude({
+            text: text,
+            title: title
+          });
+          done();// need to call done because Karma waits until done() is called
+        }).catch(done);// catch handles the erroro case
+
+      });
+
+      it('should populate postItems and dispatch ADD_POSTS', (done) => {
+      const store = createMockStore({});
+      const action = actions.startAddPosts();
+
+      store.dispatch(action).then(() => {
+        const mockActions = store.getActions();// returns an array of actions that have been dispatched for this mock store
+        expect(mockActions[0].type).toEqual('ADD_POSTS');
+        expect(mockActions[0].posts.length).toEqual(1);
+        expect(mockActions[0].posts[0].text).toEqual('Some Test text');
+
+        done();
+      }, done);
+
+    });
 
   });
+
+  // it('should generate addPosts action', () => {
+  //   var posts = [
+  //     {
+  //       id: 'abc',
+  //       title: 'Blog Title A'
+  //     },
+  //     {
+  //       id: 'def',
+  //       title: 'Blog Title D'
+  //     }
+  //   ];
+  //
+  //   var action = {
+  //     type: "ADD_POSTS",
+  //     posts
+  //   };
+  //
+  //   var res = actions.addPosts();
+  //
+  //   expect(res).toEqual(action);
+  //
+  // });
 
   // it('should generate search text action', () => {
   //   var action = {

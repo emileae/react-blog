@@ -3,6 +3,7 @@ import {Route, Router, IndexRoute, hashHistory} from 'react-router';
 
 import Blog from 'Blog';
 import Post from 'Post';
+import PostForm from 'PostForm';
 // import PostForm from 'PostForm';
 // import PostList from 'PostList';
 import firebase from 'app/firebase/';

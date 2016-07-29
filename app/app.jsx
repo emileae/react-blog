@@ -19,7 +19,7 @@ import router from 'app/router/';
 //   };
 // });
 
-store.dispatch(actions.addPosts());
+store.dispatch(actions.startAddPosts());
 
 // Load foundation
 $(document).foundation();

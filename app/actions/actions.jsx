@@ -2,21 +2,33 @@ import moment from 'moment';
 
 import firebase, {firebaseRef, githubProvider} from 'app/firebase/';// if file is called index can leave off filename
 
-export var addPosts = () => {
-  var posts = [
-    {
-      id: 'abc',
-      title: 'Blog Title A'
-    },
-    {
-      id: 'def',
-      title: 'Blog Title D'
-    }
-  ];
+export var addPosts = (posts) => {
   return {
     type: "ADD_POSTS",
     posts
   }
+};
+
+export var startAddPosts = () => {
+  return (dispatch, getState) => {
+    //var uid = getState().auth.uid;
+    //var todosRef = firebaseRef.child(`users/${uid}/todos`);
+    var postsRef = firebaseRef.child(`posts`);
+    return postsRef.once('value').then((snapshot) => {
+      var posts = snapshot.val() || {};
+      var parsedPosts = [];
+
+      Object.keys(posts).forEach((postId) => {
+        parsedPosts.push({
+          id: postId,
+          ...posts[postId]
+        });
+      });
+
+      dispatch(addPosts(parsedPosts));
+
+    });
+  };
 };
 
 export var setPost = (postId, postTitle) => {
@@ -36,13 +48,13 @@ export var addPost = (post) => {
 
 export var startAddPost = (title, text) => {
   return (dispatch, getState) => {
-    
+
     var post = {
+      title,
       text,
       publish: false,
       createdAt: moment().unix(),
     };
-
     var postRef = firebaseRef.child(`posts`).push(post);
 
     return postRef.then(() => {
