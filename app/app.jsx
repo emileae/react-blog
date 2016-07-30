@@ -8,16 +8,15 @@ var store = require('configureStore').configure();
 import firebase from 'app/firebase/';
 import router from 'app/router/';
 
-// firebase.auth().onAuthStateChanged((user) => {
-//   if (user) {
-//     store.dispatch(actions.login(user.uid));
-//     store.dispatch(actions.startAddTodos());
-//     hashHistory.push('/todos');
-//   }else{
-//     store.dispatch(actions.logout());
-//     hashHistory.push('/');
-//   };
-// });
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    store.dispatch(actions.login(user.uid));
+    hashHistory.push('/admin');
+  }else{
+    store.dispatch(actions.logout());
+    hashHistory.push('/');
+  };
+});
 
 store.dispatch(actions.startAddPosts());
 

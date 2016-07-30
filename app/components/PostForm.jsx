@@ -4,6 +4,11 @@ import * as Redux from 'react-redux';
 import * as actions from 'actions';
 
 export var PostForm = React.createClass({
+  onLogout(e) {
+    var {dispatch} = this.props;
+    e.preventDefault();
+    dispatch(actions.startLogout());
+  },
   handleSubmit(e){
     e.preventDefault();
     console.log("should submit blog post");
@@ -22,26 +27,34 @@ export var PostForm = React.createClass({
   render() {
     return (
       <div>
-        <p>Post</p>
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <div className="row">
-              <div className="small-10 medium-6 column">
-                <label>
-                  Title
-                  <input ref="title" type="text"/>
-                </label>
-              </div>
-              <div className="small-12 column">
-                <label>
-                  Write something...
-                  <textarea ref="text" placeholder="None"></textarea>
-                </label>
-              </div>
-            </div>
-            <button type="submit" className="button expanded">Save</button>
-          </form>
+        <div className="page-actions">
+          <a href="#" onClick={this.onLogout}>Logout</a>
         </div>
+        <div className="row">
+          <div className="small-10 columns">
+            <p>Post</p>
+            <div>
+              <form onSubmit={this.handleSubmit}>
+                <div className="row">
+                  <div className="small-10 medium-6 column">
+                    <label>
+                      Title
+                      <input ref="title" type="text"/>
+                    </label>
+                  </div>
+                  <div className="small-12 column">
+                    <label>
+                      Write something...
+                      <textarea ref="text" placeholder="None"></textarea>
+                    </label>
+                  </div>
+                </div>
+                <button type="submit" className="button expanded">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
       </div>
     )
   }

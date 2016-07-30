@@ -10,8 +10,6 @@ import Login from 'Login';
 import firebase from 'app/firebase/';
 
 var requireLogin = (nextState, replace, next) => {
-  console.log("require login");
-  console.log("firebase.auth().currentUser", firebase.auth().currentUser);
   if(!firebase.auth().currentUser){
     replace('/login');
   }
