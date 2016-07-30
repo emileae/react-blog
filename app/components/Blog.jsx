@@ -8,10 +8,20 @@ import * as actions from 'actions';
 
 
 export var Blog = React.createClass({
+  onLogout(e) {
+    var {dispatch} = this.props;
+    e.preventDefault();
+
+    dispatch(actions.startLogout());
+  },
   render() {
 
     return (
       <div>
+
+        <div className="page-actions">
+          <a href="#" onClick={this.onLogout}>Logout</a>
+        </div>
 
         <h1 className="page-title">Le Blog</h1>
 
